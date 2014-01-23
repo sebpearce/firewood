@@ -3,7 +3,7 @@
   *
   * Author: Seb Pearce
   *
-  * Date: 2013-01-22
+  * Date: 2014-01-22
   *
   * Parses "My Clippings.txt" & creates a directory of text files based on
   * book titles.
