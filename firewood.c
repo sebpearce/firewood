@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <string.h>
 #include <stdbool.h>
 #include <errno.h>
@@ -102,9 +103,9 @@ int main(void)
             "that it does not already exist.\n");
     }
 
-    char output[CLIPPING_LENGTH];       // CLIPPING_LENGTH char line buffer
-    char title[TITLE_LENGTH];           // title buffer
-    char clippingtext[CLIPPING_LENGTH]; // clipping text buffer
+    char output[CLIPPING_LENGTH]={0};   // CLIPPING_LENGTH char line buffer
+    char title[TITLE_LENGTH]={0};       // title buffer
+    char clippingtext[CLIPPING_LENGTH]={0}; // clipping text buffer
     bool oldtitle = false;              // a title we've already encountered
     int section = 1;                    // section counter:
                                         // 1: title line; 2: clipping info;
@@ -136,7 +137,7 @@ int main(void)
                     // if the title has changed (i.e. new book)
                     if (oldtitle != true) {
                         // add new title to list
-                        listoftitles[tcnt] = malloc(sizeof(output) + 1);
+                        listoftitles[tcnt] = calloc(1, sizeof(output) + 1);
                         strcpy(listoftitles[tcnt], output);
                         // close last outfile
                         if (outfile) fclose(outfile);
