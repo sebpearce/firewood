@@ -17,7 +17,8 @@
 #include <sys/stat.h>
 
 #define DEFAULT_FILENAME "My Clippings.txt"
-#define DEFAULT_DIRNAME "Kindle Clippings"
+#define DEFAULT_DIRNAME "Kindle Clippings/"
+#define PATH_LENGTH 18
 #define TITLE_LENGTH 200
 #define CLIPPING_LENGTH 50000
 
@@ -62,7 +63,7 @@ void openTitle(char* title, const char* action)
 {
     // make a temp filename to store the title
     char filename[TITLE_LENGTH] = {0};
-    char path[TITLE_LENGTH+50] = DEFAULT_DIRNAME "/";
+    char path[TITLE_LENGTH+PATH_LENGTH] = DEFAULT_DIRNAME;
     strcpy(filename, title);
     // trim trailing \n and \r and space from filename
     trimNewline(filename);
@@ -83,8 +84,7 @@ int main(void)
     // open the My Clippings file
     infile = fopen(DEFAULT_FILENAME, "r");
     if (!infile) {
-        printf("Error: could not open My Clippings.txt.\n");
-        exit(1);
+        die("Error: could not open My Clippings.txt.\n");
     }
 
     // check if we have the byte order mark (BOM) at the beginning
