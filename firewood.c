@@ -23,6 +23,14 @@
 #define TITLE_LENGTH 200
 #define CLIPPING_LENGTH 50000
 
+enum {
+    TITLE_LINE = 1,
+    CLIPPING_INFO = 2,
+    BLANK_LINE = 3,
+    CLIPPING_TEXT = 4,
+    EQUALS_LINE = 5
+};
+
 FILE* infile = NULL;
 FILE* outfile = NULL;
 int tcnt = 0;                       // title counter (++ if new book is found)
@@ -65,7 +73,8 @@ void openTitle(char* title, const char* action)
     // make a temp filename to store the title
     char filename[TITLE_LENGTH] = {0};
     char path[TITLE_LENGTH+PATH_LENGTH] = DEFAULT_DIRNAME;
-    strcpy(filename, title);
+    strncpy(filename, title, strlen(title));
+    filename[strlen(title)] = '\0';
     // trim trailing \n and \r and space from filename
     trimNewline(filename);
     // add .txt
@@ -115,16 +124,18 @@ int main(void)
     while (fgets(output, sizeof(output), infile) != NULL) {
 
         switch (section) {
-            case 1:
+
+            case TITLE_LINE:
                 // same title as last time? just print ...
-                if (strcmp(title, output) == 0) {
+                if (strncmp(title, output, strlen(output)) == 0) {
                     fprintf(outfile, "...\n");
                 } else {
                     // first, check if title has already been stored in list
                     for (int i = 0; i < tcnt; i++) {
                         if (strcmp(listoftitles[i], output) == 0) {
                             // store name in title buffer
-                            strcpy(title, output);
+                            strncpy(title, output, strlen(output));
+                            title[strlen(output)] = '\0';
                             oldtitle = true;
                             // close old outfile
                             if (outfile) fclose(outfile);
@@ -138,37 +149,45 @@ int main(void)
                     if (oldtitle != true) {
                         // add new title to list
                         listoftitles[tcnt] = calloc(1, sizeof(output) + 1);
-                        strcpy(listoftitles[tcnt], output);
+                        strncpy(listoftitles[tcnt], output, strlen(output));
+                        listoftitles[tcnt][strlen(output)] = '\0';
                         // close last outfile
                         if (outfile) fclose(outfile);
                         // open a new outfile using the title as a filename
                         openTitle(listoftitles[tcnt], "w");
                         tcnt++;
                         // store name in title buffer
-                        strcpy(title, output);
+                        strncpy(title, output, strlen(output));
+                        title[strlen(output)] = '\0';
                         // print the new title to the outfile
                         fprintf(outfile, "%s\n", title);
                     }
                     oldtitle = false;
                 }
                 break;
-            case 2:
+
+            case CLIPPING_INFO:
                 // this is the clipping info; just print a newline
                 fprintf(outfile, "\n");
                 break;
-            case 3:
+
+            case BLANK_LINE:
                 // skip (blank line)
                 break;
-            case 4:
+
+            case CLIPPING_TEXT:
                 // print the clipping text
-                strcpy(clippingtext, output);
+                strncpy(clippingtext, output, strlen(output));
+                clippingtext[strlen(output)] = '\0';
                 fprintf(outfile, "%s", clippingtext);
                 break;
-            case 5:
+
+            case EQUALS_LINE:
                 // this is the ========= line; just print a newline
                 fprintf(outfile, "\n");
                 section = 0;
                 break;
+                
             default:
                 break;
         }
