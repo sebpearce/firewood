@@ -12,7 +12,11 @@ Usage
 ####The easy way####
 Put the `firewood.app` in the same directory as `My Clippings.txt`, then double-click `firewood.app`. This is an AppleScript that will open a terminal window and run the application.
 
-If you get an error message about an “unidentified developer”, try holding the alt/option key while double-clicking on the program.
+If you get an error message about an “unidentified developer”, try this:
+
+1. right-click the .app file
+2. hold the alt/option key
+3. click `open`
 
 ####The regular way####
 Run `make` to create the executable. Put the executable in the same directory as `My Clippings.txt` (this can be found in the Kindle's `documents` directory.)
