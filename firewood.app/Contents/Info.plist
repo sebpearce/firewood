@@ -15,7 +15,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>test2</string>
+	<string>Firewood</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -42,7 +42,7 @@
 		<key>savedFrame</key>
 		<string>541 203 602 597 0 0 1440 878 </string>
 		<key>selectedTabView</key>
-		<string>result</string>
+		<string>event log</string>
 	</dict>
 </dict>
 </plist>
