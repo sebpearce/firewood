@@ -23,24 +23,32 @@ default_filename = "My Clippings.txt"
 dirname = "Kindle Clippings"
 
 if len(argv) >= 3:
-  script, filename, flag = argv
-  if flag == "-i":
+  script, arg1, arg2 = argv
+  if arg1 == "-i":
     show_info = True
+    filename = arg2
+  elif arg2 == "-i":
+    show_info = True
+    filename = arg1
+  else:
+    filename = arg1
 elif len(argv) == 2:
-  script, filename = argv
+  script, arg1 = argv
+  if arg1 == "-i":
+    show_info = True
+    filename = default_filename
+  else:
+    filename = arg1
 else:
   filename = default_filename
-  # check that My Clippings exists, otherwise exit
-  if not os.path.isfile(filename):
-    print "ERROR: cannot find My Clippings.txt."
-    print "Please make sure it is in the same folder as this script."
-    print "If you've renamed it, enter the new file name like this:"
-    print "\tpython pyre.py new_file_name.txt"
-    sys.exit()
 
-print "Length: "
-print len(argv)
-
+# check that file exists, otherwise exit
+if not os.path.isfile(filename):
+  print "ERROR: cannot find \"" + filename + "\"."
+  print "Please make sure it is in the same folder as this script."
+  print "If you've renamed it, enter the new file name like this:"
+  print "\tpython pyrewood.py new_file_name.txt"
+  sys.exit()
 
 # each clipping always consists of 5 lines
 title_line = 1
