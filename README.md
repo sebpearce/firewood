@@ -23,3 +23,5 @@ Run `make` to create the executable. Put the executable in the same directory as
 
 Run it by executing `./firewood`.
 
+**UPDATE (2015-04-06):** I've rewritten Firewood in Python to make it easier for me to tinker with. The new version is `pyrewood.py`. You can run it as a script by putting it in the same directory as your `My Clippings.txt` and doing `python pyrewood.py` from the terminal.
+
