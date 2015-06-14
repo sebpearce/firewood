@@ -1,4 +1,4 @@
-#
+#!/usr/bin/env python
 # pyrewood.py
 #
 # Author: Seb Pearce
