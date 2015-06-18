@@ -58,18 +58,18 @@ clipping_text = 4
 equals_line = 5
 
 
-def remove_chars(str):
+def remove_chars(s):
   # replace colons with a hyphen so "A: B" becomes "A - B"
-  str = re.sub(' *: *', ' - ', str)  
-  str = str.replace('?','')
-  str = str.replace('&','and')
+  s = re.sub(' *: *', ' - ', s)  
+  s = s.replace('?','')
+  s = s.replace('&','and')
   # replace ( ) with a hyphen so "this (text)" becomes "this - text"
-  str = re.sub('\((.+?)\)', r'- \1', str)  
+  s = re.sub('\((.+?)\)', r'- \1', s)  
   # delete filename chars tht are not alphanumeric or ; , _ -
-  str = re.sub('[^a-zA-Z\d\s;,_-]+', '', str)  
+  s = re.sub('[^a-zA-Z\d\s;,_-]+', '', s)  
   # trim off anything that isn't a word at the start & end
-  str = re.sub('^\W+|\W+$', '', str)  
-  return str
+  s = re.sub('^\W+|\W+$', '', s)  
+  return s
 
 # create the output directory
 if not os.path.exists(dirname):
@@ -117,7 +117,7 @@ for x in data:
         outfile = open(path, 'a')
 
   # include metadata (location, time etc.) if desired
-  elif current_line == clipping_info and show_info == True:
+  elif current_line == clipping_info and show_info:
     x = x.replace('- Your Highlight on ','')
     x = x.replace('Added on ','')
     outfile.write("%s\n\n" % x)
