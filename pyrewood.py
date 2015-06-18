@@ -110,11 +110,16 @@ for line_num, x in enumerate(infile):
 
     # trim filename-unfriendly chars for outfile name
     outfile_name = remove_chars(title) + '.txt'
-    # add to set of output_files
-    output_files.add(outfile_name)
+
+    # we want to `append` by default, but if this is the first time we're
+    # seeing this title, we should set the mode to `write`
+    mode = 'a'
+    if outfile_name not in output_files:
+      mode = 'w'
+      output_files.add(outfile_name)
 
     path = DIRNAME + '/' + outfile_name
-    with open(path, 'a') as outfile:
+    with open(path, mode) as outfile:
       if metadata:
         # write out any necessary metadata
         outfile.write("%s\n\n" % metadata)
